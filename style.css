@@ -13,7 +13,11 @@
     margin: 0;
     padding: 0;
     font-family: 'Quicksand', sans-serif;
+    /* Désactive le voile/flash gris au clic sur mobile */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
+
 
 body {
     background-color: var(--bg-color);
