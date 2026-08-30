@@ -1,10 +1,10 @@
 let appData = JSON.parse(localStorage.getItem('appData')) || {
     diverseLists: [],
     items: {
-        'Mes Repas': ['Poulet rôti', 'Pâtes carbonara'],
-        'Liste Cadeaux': ['Anniversaire Maman', 'Noël'],
-        'Liste Idées': ['Peinture salon', 'Voyage Italie'],
-        'Liste Courses': ['Lait', 'Oeufs', 'Pain']
+        'Mes Repas': [],
+        'Liste Cadeaux': [],
+        'Liste Idées': [],
+        'Liste Courses': []
     }
 };
 
