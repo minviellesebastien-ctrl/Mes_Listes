@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Listes</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A7C59">
+    <style>
+        :root {
+            --bg-color: #F4F0EB;
+            --card-bg: #FFFFFF;
+            --primary-green: #4A7C59;
+            --primary-yellow: #F4D06F;
+            --text-color: #2C4A35;
+            --border-color: #E2DDD5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 90px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+
+        .main-container {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scrollable-section {
+            overflow-y: auto;
+            max-height: 45vh;
+            padding-right: 5px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            position: relative;
+        }
+
+        .list-item:hover {
+            background-color: #FAFAFA;
+        }
+
+        .list-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .list-icon {
+            font-size: 1.4rem;
+            color: var(--primary-green);
+            width: 30px;
+            text-align: center;
+        }
+
+        .list-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .arrow {
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .separator {
+            height: 2px;
+            background-color: var(--primary-green);
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .add-diverse-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .add-diverse-container input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            outline: none;
+            font-size: 1rem;
+            background: #FAFAFA;
+        }
+
+        .add-diverse-container button {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Bottom Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-btn {
+            flex: 1;
+            max-width: 220px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn-importer {
+            background-color: var(--primary-green);
+        }
+
+        .btn-exporter {
+            background-color: var(--primary-green);
+        }
+
+        /* Modal / Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .modal-title {
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            color: #555;
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mes Listes</h1>
+    </header>
+
+    <div class="main-container">
+        <div id="fixed-lists">
+            <div class="list-item" onclick="openModal('Repas')">
+                <div class="list-content">
+                    <span class="list-icon">🍽️</span>
+                    <span class="list-title">Repas</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Cadeaux')">
+                <div class="list-content">
+                    <span class="list-icon">🎁</span>
+                    <span class="list-title">Cadeaux</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Idées')">
+                <div class="list-content">
+                    <span class="list-icon">💡</span>
+                    <span class="list-title">Idées</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Courses')">
+                <div class="list-content">
+                    <span class="list-icon">🛒</span>
+                    <span class="list-title">Courses</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('A faire')">
+                <div class="list-content">
+                    <span class="list-icon">📋</span>
+                    <span class="list-title">A faire</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="section-title">Diverses</div>
+        
+        <div class="add-diverse-container">
+            <input type="text" id="newDiverseInput" placeholder="Nouvelle liste diverse...">
+            <button onclick="addDiverseList()">Ajouter</button>
+        </div>
+
+        <div class="scrollable-section" id="diverse-lists-container">
+            </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-btn btn-importer" onclick="triggerImport()">
+            📥 Importer
+        </button>
+        <button class="nav-btn btn-exporter" onclick="triggerExport()">
+            📤 Exporter
+        </button>
+    </div>
+
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">Fermer ×</button>
+            <h2 class="modal-title" id="modalTitle">Titre</h2>
+            <div class="modal-body" id="modalBody">
+                Contenu de la liste...
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+
+    <script>
+        // Gestion des listes diverses (sauvegardées dans le localStorage)
+        let diverseLists = JSON.parse(localStorage.getItem('diverseLists')) || [
+            { id: 1, name: 'Liste Projet' }
+        ];
+
+        function renderDiverseLists() {
+            const container = document.getElementById('diverse-lists-container');
+            container.innerHTML = '';
+            
+            diverseLists.forEach(list => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <div class="list-content" onclick="openModal('${list.name}')">
+                        <span class="list-icon">📁</span>
+                        <span class="list-title">${list.name}</span>
+                    </div>
+                    <div style="display:flex; align-items:center;">
+                        <span class="arrow" onclick="openModal('${list.name}'); event.stopPropagation();">&gt;</span>
+                        <button class="delete-btn" onclick="deleteDiverseList(${list.id}); event.stopPropagation();" title="Supprimer">×</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            localStorage.setItem('diverseLists', JSON.stringify(diverseLists));
+        }
+
+        function addDiverseList() {
+            const input = document.getElementById('newDiverseInput');
+            const name = input.value.trim();
+            if (name) {
+                diverseLists.push({ id: Date.now(), name: name });
+                input.value = '';
+                renderDiverseLists();
+            }
+        }
+
+        function deleteDiverseList(id) {
+            diverseLists = diverseLists.filter(list => list.id !== id);
+            renderDiverseLists();
+        }
+
+        // Pop-up Modal
+        function openModal(title) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = `Contenu et gestion des éléments pour : ${title}`;
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+
+        // Importer / Exporter
+        function triggerExport() {
+            const data = {
+                diverseLists: diverseLists,
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mes-listes-backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function triggerImport() {
+            document.getElementById('importFile').click();
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.diverseLists) {
+                        diverseLists = data.diverseLists;
+                        renderDiverseLists();
+                        alert('Importation réussie !');
+                    }
+                } catch (err) {
+                    alert('Erreur lors de l\'importation du fichier.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Initialisation au chargement
+        renderDiverseLists();
+
+        // Enregistrement du Service Worker pour la PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(() => console.log('Service Worker enregistré avec succès.'))
+            .catch(err => console.log('Échec de l\'enregistrement du Service Worker:', err));
+        }
+    </script>
+</body>
+              </html>
+              
