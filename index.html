@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Listes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Bandeau jaune large comme l'écran en haut avec le texte par-dessus -->
+    <div class="top-yellow-banner">
+        <h1>Mes Listes</h1>
+    </div>
+
+    <div class="page-wrapper" id="pageWrapper">
+        <div class="main-container">
+            <!-- Cadre des listes fixes (Réordonnées : Repas, Courses, A faire, des idees?) -->
+            <div class="fixed-lists-section">
+                <div class="list-item" onclick="openModal('Mes Repas')">
+                    <div class="list-content">
+                        <span class="list-icon">
+                            <!-- SVG Assiette, couteau, fourchette -->
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M16 2v6a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V2"/><path d="M12 10v12"/><path d="M4 2v7a3 3 0 0 0 3 3h1v10"/><path d="M20 2v20"/></svg>
+                        </span>
+                        <span class="list-title">Mes Repas</span>
+                    </div>
+                </div>
+
+                <div class="list-item" onclick="openModal('Liste Courses')">
+                    <div class="list-content">
+                        <span class="list-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        </span>
+                        <span class="list-title">Liste Courses</span>
+                    </div>
+                </div>
+
+                <div class="list-item" onclick="openModal('A faire')">
+                    <div class="list-content">
+                        <span class="list-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M12 11h4"/><path d="M12 15h4"/><path d="M8 11h1"/><path d="M8 15h1"/></svg>
+                        </span>
+                        <span class="list-title">A faire</span>
+                    </div>
+                </div>
+
+                <div class="list-item" onclick="openModal('des idees?')">
+                    <div class="list-content">
+                        <span class="list-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 18h6M10 22h4M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14z"/></svg>
+                        </span>
+                        <span class="list-title">des idees?</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trait vert -->
+            <div class="green-divider"></div>
+
+            <!-- Cadre scrollable réduit destiné aux nouvelles listes -->
+            <div class="scrollable-diverse-section">
+                <div id="diverse-lists-container"></div>
+            </div>
+
+            <!-- Cadre jaune en bas pour ajouter une liste -->
+            <div class="header-input-card">
+                <input type="text" id="newDiverseInput" placeholder="Ajouter une liste..." onkeypress="handleKeyAdd(event)">
+                <button class="action-btn-ajouter" onclick="addDiverseList()">Ajouter</button>
+            </div>
+        </div>
+
+        <!-- Barre du bas : Importer / Exporter -->
+        <div class="bottom-nav">
+            <button class="nav-btn btn-importer" onclick="triggerImport()">Importer</button>
+            <button class="nav-btn btn-exporter" onclick="triggerExport()">Exporter</button>
+        </div>
+    </div>
+
+    <!-- Pop-up standard -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">Fermer ×</button>
+            <h2 class="modal-title" id="modalTitle">Titre</h2>
+            <div class="modal-body">
+                <div class="modal-input-row">
+                    <input type="text" id="newItemInput" placeholder="Ajouter un élément..." onkeypress="handleItemKeyPress(event)">
+                    <button class="circle-add-btn" onclick="addItemToList()" title="Ajouter">+</button>
+                </div>
+                <ul id="itemListContainer" class="item-list-container"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up spécifique "Mes Repas" -->
+    <div id="mealModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeMealModal()">Fermer ×</button>
+            <h2 class="modal-title">Mes Repas</h2>
+            <div class="modal-body">
+                <textarea id="mealFreeText" placeholder="Écrivez vos repas ici..." oninput="saveMealText()"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+    <script src="script.js"></script>
+</body>
+      </html>
+      
