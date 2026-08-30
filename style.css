@@ -360,7 +360,7 @@ body {
     width: 100%;
     flex-grow: 1;
     padding: 14px;
-    border: 1.5px solid var(--primary-green);
+    border: none;
     border-radius: 12px;
     outline: none;
     font-size: 1rem;
