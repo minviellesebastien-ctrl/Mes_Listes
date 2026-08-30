@@ -1,19 +1,11 @@
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open('mes-listes-v1').then((cache) => {
-      return cache.addAll([
-        './',
-        './index.html',
-        './style.css',
-        './script.js',
-        './manifest.json'
-      ]);
-    })
-  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request))
-  );
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });
