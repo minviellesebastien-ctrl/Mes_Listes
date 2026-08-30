@@ -62,6 +62,7 @@ body {
     overflow: hidden;
     padding: 30px 20px 10px 20px;
     gap: 8px;
+    padding-bottom: 70px;
 }
 
 .fixed-lists-section {
@@ -194,13 +195,20 @@ body {
 }
 
 .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 500px;
+    padding: 10px 20px max(12px, env(safe-area-inset-bottom)) 20px;
+    background-color: var(--bg-color);
     display: flex;
     justify-content: center;
     gap: 15px;
-    flex-shrink: 0;
-    padding-top: 4px;
+    z-index: 99;
 }
+
 
 .nav-btn {
     flex: 1;
