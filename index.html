@@ -111,5 +111,16 @@
 
     <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
     <script src="script.js"></script>
+
+    <!-- À placer juste avant la balise </body> -->
+<div class="bottom-nav">
+    <button class="nav-btn btn-importer" onclick="triggerImport()">Importer</button>
+    <button class="nav-btn btn-exporter" onclick="triggerExport()">Exporter</button>
+</div>
+
+<input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+<script src="script.js"></script>
+</body>
+    
 </body>
 </html>
