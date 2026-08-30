@@ -1,4 +1,4 @@
-const CACHE_NAME = 'listes-app-v8';
+const CACHE_NAME = 'listes-app-v9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
