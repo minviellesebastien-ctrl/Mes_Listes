@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Listes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Mes Listes</h1>
+    </header>
+
+    <div class="main-container">
+        <!-- 5 listes fixes non supprimables -->
+        <div id="fixed-lists">
+            <div class="list-item" onclick="openModal('Repas')">
+                <div class="list-content">
+                    <span class="list-icon">🍽️</span>
+                    <span class="list-title">Repas</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Cadeaux')">
+                <div class="list-content">
+                    <span class="list-icon">🎁</span>
+                    <span class="list-title">Cadeaux</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Idées')">
+                <div class="list-content">
+                    <span class="list-icon">💡</span>
+                    <span class="list-title">Idées</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('Courses')">
+                <div class="list-content">
+                    <span class="list-icon">🛒</span>
+                    <span class="list-title">Courses</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+            <div class="list-item" onclick="openModal('A faire')">
+                <div class="list-content">
+                    <span class="list-icon">📋</span>
+                    <span class="list-title">A faire</span>
+                </div>
+                <span class="arrow">&gt;</span>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- Section Listes Diverses avec ajout et scroll -->
+        <div class="section-title">Diverses</div>
+        
+        <div class="add-diverse-container">
+            <input type="text" id="newDiverseInput" placeholder="Nouvelle liste diverse...">
+            <button onclick="addDiverseList()">Ajouter</button>
+        </div>
+
+        <div class="scrollable-section" id="diverse-lists-container">
+            <!-- Les listes diverses s'ajouteront ici -->
+        </div>
+    </div>
+
+    <!-- Barre du bas : Importer / Exporter -->
+    <div class="bottom-nav">
+        <button class="nav-btn btn-importer" onclick="triggerImport()">
+            📥 Importer
+        </button>
+        <button class="nav-btn btn-exporter" onclick="triggerExport()">
+            📤 Exporter
+        </button>
+    </div>
+
+    <!-- Fenêtre modale / Pop-up -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">Fermer ×</button>
+            <h2 class="modal-title" id="modalTitle">Titre</h2>
+            <div class="modal-body" id="modalBody">
+                Contenu de la liste...
+            </div>
+        </div>
+    </div>
+
+    <!-- Input file caché pour l'importation -->
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+
+    <script src="script.js"></script>
+</body>
+</html>
