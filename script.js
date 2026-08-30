@@ -67,13 +67,14 @@ function openModal(title) {
     document.getElementById('modalTitle').innerText = title;
     renderModalItems();
     document.getElementById('customModal').style.display = 'flex';
-    document.getElementById('pageWrapper').classList.add('blurred');
+    document.body.classList.add('blurred'); /* Floute tout le body */
 }
 
 function closeModal() {
     document.getElementById('customModal').style.display = 'none';
-    document.getElementById('pageWrapper').classList.remove('blurred');
+    document.body.classList.remove('blurred'); /* Retire le flou */
 }
+
 
 function renderModalItems() {
     const container = document.getElementById('itemListContainer');
